@@ -1,0 +1,53 @@
+package mid.bean;
+import mid.term.CommonDb;
+
+public class blogBean {
+	private int id;
+	private String title;
+	private String content;
+	private String author_name;
+	private int access_count;
+	private String savetime;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	public String getAuthor_name() {
+		return author_name;
+	}
+	public void setAuthor_name(String author_name) {
+		this.author_name = author_name;
+	}
+	
+	public int getAccess_count() {
+		return access_count;
+	}
+	public void setAccess_count(int access_count) {
+		this.access_count = access_count;
+	}
+	
+	public String getSavetime() {
+		return savetime;
+	}
+	public void setSavetime(String savetime) {
+		this.savetime = savetime;
+	}
+}

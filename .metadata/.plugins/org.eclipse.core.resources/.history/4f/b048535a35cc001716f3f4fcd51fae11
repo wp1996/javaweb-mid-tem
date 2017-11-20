@@ -1,0 +1,55 @@
+package mid.bean;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
+
+import mid.term.CommonDb;
+public class commentBean {
+	private int id;
+	private String comment;
+	private String commenter_name;
+	private String addtime;
+	private int result;
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public int saveComment() {
+		this.addtime = df.format(new Date());
+		String sql = "INSERT INTO comment (comment,commenter_name,addtime) VALUES(?,?,?)";
+		try {
+			PreparedStatement ps = CommonDb.executePreparedStatement(sql);
+			ps.setString(1, this.comment);
+			ps.setString(2, this.commenter_name);
+			ps.setString(3, this.addtime);
+			result = ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public String getCommenter_name() {
+		return commenter_name;
+	}
+	public void setCommenter_name(String commenter_name) {
+		this.commenter_name = commenter_name;
+	}
+	public String getAddtime() {
+		return addtime;
+	}
+	public void setAddtime(String addtime) {
+		this.addtime = addtime;
+	}
+}

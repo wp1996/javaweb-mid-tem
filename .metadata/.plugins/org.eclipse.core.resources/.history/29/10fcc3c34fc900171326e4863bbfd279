@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>servlet测试</title>
+<script src="marked/lib/marked.js"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<form action="FirstServlet" method="post" name="form1">
+<input type="submit" value="提交">
+<span id="marked"></span>
+</form>
+<script type="text/javascript">
+//$(document).ready(function (){
+	$("#marked").html(markde("**测试**"));
+//});
+</script>
+</body>
+</html>
