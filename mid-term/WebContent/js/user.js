@@ -42,6 +42,7 @@ function checkemail() {
 	}else {
 		$("#nullemail").css("display", "none");
 	}
+	
 	return true;
 }
 
@@ -94,4 +95,42 @@ function checkconfirm() {
 		$("#nullconfirm").css("display", "none");
 	}
 	return true;
+}
+
+// 检测邮箱和用户名是否重复
+// 访问servlet时以引用js代码的文件路径为基准
+function checkrepeat() {
+	var email = $("#useremail").val();
+	var username = $("#username").val();
+	var tag = false;
+	$.ajax({
+		url: "isRepeat",
+		type: "POST",
+		async: false,
+		data: {
+			email: email,
+			username: username
+		},
+		success: function(data) {
+			var repeat = JSON.parse(data);
+			if (repeat['reemail'] == "true") {
+				$("#nullemail").html('<span style="color: red;">该邮箱已被注册！</span>');
+				$("#nullemail").css("display", "block");
+				return;
+			}else {
+				$("#nullemail").css("display", "none");
+			}
+			if (repeat['rename'] == "true") {
+				$("#nullname").html('<span style="color: red;">该用户名已被注册！</span>');
+				$("#nullname").css("display", "block");
+				return;
+			}else {
+				$("#nullname").css("display", "none");
+				tag = true;
+			}
+		},
+		error: function(error) {
+		}
+	});
+	return tag;
 }

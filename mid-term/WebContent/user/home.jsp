@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
+    <%@page import="mid.bean.blogBean, mid.factory.DaoFactory" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,6 +9,7 @@
 <%@ include file="include.jsp" %>
 </head>
 <%
+blogBean blog = DaoFactory.getblogBean();
 int n = ((int)(Math.random() * 10) % 7) + 1;
 String img_url = "../images/search-bg" + n + ".jpg";
 %>
@@ -23,7 +25,76 @@ String img_url = "../images/search-bg" + n + ".jpg";
 <button class="btn btn-default search-btn" type="button">搜索</button>
 </span>
 </div>
-<div id="blogs_list" style="float: left; margin-top: 10px; padding: 10px;">
+<div class="navbar navbar-inverse" role="navigation" style="margin-top: 10px;">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="http://www.oschina.net/">开源中国</a>
+</div>
+<div>
+<ul class="nav navbar-nav">
+<li class=""><a href="https://www.csdn.net/">CSDN</a></li>
+<li class="dropdown active">
+<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Java<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="https://www.jcp.org/en/home/index">JCP</a></li>
+<li><a href="http://man.lupaworld.com/content/develop/open-open/">Java开源大全</a></li>
+<li><a href="http://outofmemory.cn/#csdn">内存-溢出</a></li>
+<li><a href="http://www.importnew.com/">ImportNew</a></li>
+<li><a href="http://ifeve.com/">并发编程网</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="blogs_list" style="float: left; margin-top: 10px; padding: 10px; width: 100%;">
+<div>
+<div class="recommend">
+<span>今日推荐：</span>
+</div>
+<div class="row" style="margin-top: 10px;">
+<div class="col-md-6">
+<ul style="width: 100%;">
+<%
+ResultSet rs = blog.getAllBlogs();
+String title = "";
+while(rs.next()) {
+	title = rs.getString("title");
+	if (title.length() > 15) {
+	/*
+	int count = 20;
+	byte[] bs = title.getBytes("GBK");
+	for (int i = 0; i < 20; i++) {
+		if(bs[i] < 0) { // 判断是否为汉字
+			count++;
+		}
+	}
+	if (count % 2 == 0) {
+		count = 20;
+	}else {
+		count = 21;
+	}
+	*/
+	title = title.substring(0, 15) + "...";
+	}
+	%>
+	<li class="recommend-blog-content">
+	<form action='show_blog.jsp' method='POST'>
+	<div style="text-align: left;">
+	<input style='display: none;' name='blog_id'value="<%=rs.getString("id") %>">
+	<input style='display: none;' name='author' value="<%=rs.getString("author_name") %>">
+	<input class='recommend-blog-title' type='submit' value="<%=title %>">
+	<span class="access_count">(访问量 : <%=rs.getInt("access_count") %>)</span>
+	</div>
+	</form>
+	</li>
+	<%
+}
+%>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -50,10 +121,12 @@ $("#search").click(function() {
 			json = JSON.parse(data);
 			for(var i in json) {
 				var blog = JSON.parse(json[i]);
-				bghtml += "<p style='float:left; margin-top: 10px;'><form action='show_blog.jsp' method='POST'><input style='display: none;' name='blog_id'" +
-				" value="+ blog['id'] +"><input style='display: none;' name='author' value="+ blog['author'] + "><input type='submit' value=" + blog["title"] +
-				" class='btn btn-link'>" +
-				"</form></p>";
+				bghtml += "<p style='float:left; margin-top: 10px;'>" + 
+				"<form action='show_blog.jsp' method='POST'><div style='float: left;'>" + 
+				"<input style='display: none;' name='blog_id'value=" + blog['id'] + 
+				"><input style='display: none;' name='author' value="+ blog['author'] + 
+				"><input class='search-title' type='submit' value=" + blog["title"] +
+				"></div></form></p>";
 			}
 			$("#blogs_list").html(bghtml);
 		},

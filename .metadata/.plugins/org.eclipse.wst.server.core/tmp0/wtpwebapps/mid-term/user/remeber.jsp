@@ -1,6 +1,6 @@
 <%@page import="java.io.PrintWriter"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@ page import = "org.json.JSONObject" %>
 <%
 String name = "";
