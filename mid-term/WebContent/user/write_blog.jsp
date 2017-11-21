@@ -106,7 +106,7 @@ if(request.getParameter("type").equals("2")) {
 if (request.getParameter("type").equals("1")){
 	%>
 <div style="height: 8vh">
-<input class="title" placeholder="请输入标题" id="title" name="title"></input>
+<input class="title" maxlength="30" placeholder="请输入标题" id="title" name="title"></input>
 </div>
 <div class="editormd" id="test-editormd">
     <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc" id="editormd"></textarea>

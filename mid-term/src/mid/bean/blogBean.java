@@ -50,6 +50,33 @@ public class blogBean {
 		return rs;
 	}
 	
+	public int setAccesscount(int count, int id) {
+		String sql = "UPDATE blog SET access_count=? WHERE id=?";
+		int result = 0;
+		try {
+			PreparedStatement ps = CommonDb.executePreparedStatement(sql);
+			ps.setInt(1, count);
+			ps.setInt(2, id);
+			result = ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		this.access_count = count;
+		return result;
+	}
+	
+	public ResultSet getAllBlogs() {
+		String sql = "SELECT * FROM blog ORDER BY id DESC LIMIT 10";
+		ResultSet rs = null;
+		try {
+			PreparedStatement ps = CommonDb.executePreparedStatement(sql);
+			rs = ps.executeQuery();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
 	public int getId() {
 		return id;
 	}

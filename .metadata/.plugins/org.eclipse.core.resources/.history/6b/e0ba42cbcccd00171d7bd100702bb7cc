@@ -1,0 +1,20 @@
+package mid.dao.impl;
+
+import mid.bean.User;
+import mid.dao.IUserDao;
+
+public class UserDaoImpl implements IUserDao {
+
+	@Override
+	public User getUserByName(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUserByEmail(String userEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,10 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
     import = "mid.term.CommonDb"
     %>
     <%@ page import = "java.sql.*" %>
 <%
-request.setCharacterEncoding("utf-8");
+String reurl = request.getHeader("Referer");
+if (reurl == null) {
+	response.sendRedirect("../errorpage/nopermission.jsp");
+	return;
+}
+request.setCharacterEncoding("UTF-8");
 String username = request.getParameter("username").trim();
 String useremail = request.getParameter("useremail").trim();
 String password = request.getParameter("password").trim();
@@ -19,6 +24,7 @@ try {
 	//ResultSet rs = ps.getGeneratedKeys();
 	if (result > 0) {
 		session.setAttribute("user_name", username);
+		session.setAttribute("user_email", useremail);
 		//session.setAttribute("userid", rs.getInt(1));
 		response.sendRedirect("personal_home.jsp");
 	}else {

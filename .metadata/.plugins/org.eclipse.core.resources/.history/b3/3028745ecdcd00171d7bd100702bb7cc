@@ -1,0 +1,27 @@
+package mid.dao.impl;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import mid.bean.User;
+import mid.dao.IUserDao;
+import mid.term.CommonDb;
+
+public class UserDaoImpl implements IUserDao {
+
+	@Override
+	public User getUserByName(String userName) {
+		String sql = "SELECT * FROM user WHERE user_name=?";
+		PreparedStatement ps = CommonDb.executePreparedStatement(sql);
+		try {
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+		}
+	}
+
+	@Override
+	public User getUserByEmail(String userEmail) {
+		
+	}
+
+}

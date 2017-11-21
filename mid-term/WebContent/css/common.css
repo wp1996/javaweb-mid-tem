@@ -291,6 +291,7 @@ margin:10px;
 }
 
 .blog-title {
+	margin-top: 6px;
 	font-size: 2.0rem;
 	background-color: #FFFAFA;
 	font-weight: bold;
@@ -345,4 +346,48 @@ margin:10px;
 	color: #EE2C2C;
 	height: 38px;
 	line-height: 38px;
+}
+
+.search-title {
+	background-color: rgba(0,0,0,0);
+	color: #0A0A0A;
+	font-size: 1.5rem;
+	font-weight: bold;
+	border-color: rgba(0,0,0,0);
+	padding: 10px;
+}
+
+.recommend {
+	font-size: 1.7rem;
+	color: #030303;
+	text-align: left;
+}
+
+.recommend-blog-title {
+	background-color: rgba(0,0,0,0);
+	color: #0A0A0A;
+	font-size: 1.5rem;
+	font-weight: bold;
+	border-color: rgba(0,0,0,0);
+}
+
+.recommend-blog-content {
+	width: 100%;
+	border-bottom: 1px solid #969696;
+}
+
+.access_count {
+	float: right;
+	font-size: 1.0rem;
+	color: #636363;
+	padding: 3px;
+}
+
+.tohome {
+	text-align: right;
+	height: 40px;
+	line-height: 40px;
+	font-size: 2.0rem;
+	font-family: SimHei;
+	color: #FFFFF0;
 }

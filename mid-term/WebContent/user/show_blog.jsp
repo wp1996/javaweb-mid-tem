@@ -1,12 +1,21 @@
 <%@page import="javax.xml.stream.events.Comment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="mid.bean.blogBean, mid.servlet.saveComment, mid.bean.commentBean"%>
+<%@page import="mid.factory.DaoFactory" %>
 <%
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
 int blog_id = 0;
 if (request.getParameter("blog_id") != null) {
 blog_id = Integer.parseInt(request.getParameter("blog_id"));
+/*
+blogBean blogbean = DaoFactory.getblogBean();
+ResultSet blogrs = blogbean.getBlogById(blog_id);
+String author = blogrs.getString("author_name");
+if (!author.equals(session.getAttribute("user_name"))) {
+	blogbean.setAccess_count((blogrs.getInt("access_count")+1), blog_id);
+}
+*/
 %>
 <a id="blog_id" name="<%= blog_id %>"></a>
 <%
@@ -15,12 +24,16 @@ blog_id = Integer.parseInt(request.getParameter("blog_id"));
 	response.sendRedirect("../errorpage/noblog.jsp");
 	return;
 }
-blogBean blog = new blogBean();
+blogBean blog = DaoFactory.getblogBean();
 ResultSet rs = blog.getBlogById(blog_id);
 //out.print(rs.first());
 if (!rs.first()) {
 	response.sendRedirect("../errorpage/noblog.jsp");
 	return;
+}
+String author = rs.getString("author_name");
+if (!author.equals(session.getAttribute("user_name"))) {
+	blog.setAccesscount((rs.getInt("access_count")+1), blog_id);
 }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,12 +42,16 @@ if (!rs.first()) {
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <%@ include file="include.jsp" %>
+<style>
+a:hover {text-decoration: none;}
+</style>
 </head>
 <body style="background: url('../images/regist-bg1.jpg')">
 <a id="commenter_name" name="<%= session.getAttribute("user_name") %>"></a>
 <div class="mt-toolbar">
 <div class="container row">
 <span class="logo-text col-md-3">享受阅读</span>
+<span class="col-md-9 tohome"><a href="home.jsp" style="color: #FFFFF0;">主页</a></span>
 </div>
 </div>
 <div id="body">
@@ -46,7 +63,7 @@ if (!rs.first()) {
 <img src="../images/login-bg1.jpg" width="35%" style="margin: 0 auto; margin-left: 5%;">
 <div class="username"><%= request.getParameter("author") %></div>
 </div>
-<div class="col-md-1"></div>
+
 <div class="col-md-7">
 <div class="blog-title">
 <p id="blog_title"><%= rs.getString("title") %></p>
@@ -75,7 +92,9 @@ if (cmrs.first()) {
 		<span class="cmright"><%= cmrs.getString("addtime") %></span>
 		</div>
 		</div>
+		<div style="margin-top: 7px;">
 		<span class="cm_show"><%= cmrs.getString("comment") %></span>
+		</div>
 		<%
 	}while(cmrs.next());
 }
@@ -99,6 +118,11 @@ if (cmrs.first()) {
 <ul class="comment-ul" style="text-align: left;">
 <input class="btn btn-primary" value="提交" type="submit" id="saveComment">
 </ul>
+</div>
+</div>
+<div class="col-md-2">
+<div style="margin-top: 10px; float: left;">
+<span>此文章访问量：<%=blog.getAccess_count() %></span>
 </div>
 </div>
 </div>
@@ -146,8 +170,8 @@ $("#saveComment").click(function() {
 				'<div class="col-md-9">' +
 				'<span class="cmright">' + comment['addtime'] + '</span>' +
 				'</div>' +
-				'</div>' +
-				'<span class="cm_show">' + comment['comment'] + '</span>';
+				'</div><div style="margin-top: 7px;">' +
+				'<span class="cm_show">' + comment['comment'] + '</span></div>';
 			}
 			$("#comments").html(cmhtml);
 		},
