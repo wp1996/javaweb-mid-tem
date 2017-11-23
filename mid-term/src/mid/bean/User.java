@@ -9,6 +9,7 @@ public class User {
 		this.user_email = "";
 		this.user_psd = "";
 	}
+	
 	public String getUser_name() {
 		return user_name;
 	}

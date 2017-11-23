@@ -99,6 +99,10 @@ while(rs.next()) {
 </div>
 </div>
 <script>
+$(document).ready(function() {
+	$("a").attr("target", "_blank");
+	$("form").attr("target","_blank")
+});
 var bghtml;
 var blog;
 $("#search").click(function() {
@@ -121,12 +125,15 @@ $("#search").click(function() {
 			json = JSON.parse(data);
 			for(var i in json) {
 				var blog = JSON.parse(json[i]);
-				bghtml += "<p style='float:left; margin-top: 10px;'>" + 
-				"<form action='show_blog.jsp' method='POST'><div style='float: left;'>" + 
-				"<input style='display: none;' name='blog_id'value=" + blog['id'] + 
-				"><input style='display: none;' name='author' value="+ blog['author'] + 
-				"><input class='search-title' type='submit' value=" + blog["title"] +
-				"></div></form></p>";
+				if (blog['title'].length > 15) {
+					blog['title'] = blog['title'].substring(0, 15) + "...";
+				}
+				bghtml += '<div style="float:left; width: 100%; border-bottom: 1px solid #969696;">' + 
+				'<form action="show_blog.jsp" method="POST"><div style="float: left;">' + 
+				'<input style="display: none;" name="blog_id"value=' + blog['id'] + 
+				'><input style="display: none;" name="author" value='+ blog['author'] + 
+				'><input class="search-title" type="submit" value=' + blog["title"] +
+				'></div></form></div>';
 			}
 			$("#blogs_list").html(bghtml);
 		},

@@ -391,3 +391,35 @@ margin:10px;
 	font-family: SimHei;
 	color: #FFFFF0;
 }
+
+.common-input {
+	height: 35px;
+	border-radius: 5px;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	border: 1px solid #ccc;
+	box-shadow: insert 0 1px 1px;
+}
+
+.common-span {
+	height: 34px;
+	line-height: 34px;
+	font-size: 1.4rem;
+}
+
+.common-a {
+	float: left;
+	margin-left: 20px;
+	height: 34px;
+	line-height: 34px;
+}
+
+.common-button {
+	float: left; 
+	margin: 20px 10px; 
+	color: #0A0A0A;
+	width: 30%;
+}
