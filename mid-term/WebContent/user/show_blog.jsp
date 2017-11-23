@@ -34,6 +34,8 @@ if (!rs.first()) {
 String author = rs.getString("author_name");
 if (!author.equals(session.getAttribute("user_name"))) {
 	blog.setAccesscount((rs.getInt("access_count")+1), blog_id);
+}else {
+	blog.setAccess_count(rs.getInt("access_count"));
 }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

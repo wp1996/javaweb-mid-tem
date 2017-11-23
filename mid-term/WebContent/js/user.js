@@ -134,3 +134,43 @@ function checkrepeat() {
 	});
 	return tag;
 }
+
+function checkrepeat_home(check) {
+	if (check == "name"){
+		var username = $("#username").val();
+	}
+	if (check == "email"){
+		var email = $("#useremail").val();
+	}
+	var tag = false;
+	$.ajax({
+		url: "../isRepeat",
+		type: "POST",
+		async: false,
+		data: {
+			email: email,
+			username: username
+		},
+		success: function(data) {
+			var repeat = JSON.parse(data);
+			if (repeat['reemail'] == "true") {
+				$("#nullemail").html('<span style="color: red;">该邮箱已被注册！</span>');
+				$("#nullemail").css("display", "block");
+				return;
+			}else {
+				$("#nullemail").css("display", "none");
+			}
+			if (repeat['rename'] == "true") {
+				$("#nullname").html('<span style="color: red;">该用户名已被注册！</span>');
+				$("#nullname").css("display", "block");
+				return;
+			}else {
+				$("#nullname").css("display", "none");
+				tag = true;
+			}
+		},
+		error: function(error) {
+		}
+	});
+	return tag;
+}
