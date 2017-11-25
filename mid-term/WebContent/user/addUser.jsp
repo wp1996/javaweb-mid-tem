@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"
     import = "mid.term.CommonDb"
     %>
-    <%@ page import = "java.sql.*" %>
+    <%@ page import = "java.sql.*, mid.bean.User, mid.factory.DaoFactory" %>
 <%
 String reurl = request.getHeader("Referer");
 if (reurl == null) {
@@ -26,6 +26,10 @@ try {
 		session.setAttribute("user_name", username);
 		session.setAttribute("user_email", useremail);
 		//session.setAttribute("userid", rs.getInt(1));
+		User user = DaoFactory.getUser();
+		user.setUser_name(username);
+		user.setUser_email(useremail);
+		user.setUser_psd(password);
 		response.sendRedirect("personal_home.jsp");
 	}else {
 		out.print("注册失败！ 3秒后跳回注册界面<br/>点击   <a href='../regist.html'>这里</a>  直接跳转");
