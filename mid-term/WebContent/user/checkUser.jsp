@@ -23,6 +23,7 @@ rs = ps.executeQuery();
 if (rs.first()) {
 	session.setAttribute("user_name", username);
 	session.setAttribute("user_email", rs.getString("user_email"));
+	session.setAttribute("image_url", rs.getString("image_url"));
 	if (remeberpsd != null) {
 		// 设置客户端cookie
 		Cookie c1 = new Cookie("username",username);
@@ -32,6 +33,7 @@ if (rs.first()) {
 		response.addCookie(c1);
 		response.addCookie(c2);
 	}
+	DaoFactory.getUser().initByName(username);
 	response.sendRedirect("personal_home.jsp");
 }else {
 	out.print("登录失败！ 3秒后跳回登录界面<br/>点击  <a href='../login.html'>这里</a>  直接跳转");

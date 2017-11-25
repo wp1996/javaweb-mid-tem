@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../js/user.js"></script>
 <script type="text/javascript" src="../js/index.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.js"></script>
 <link rel="stylesheet" href="../editormd/examples/css/style.css" />
 <link rel="stylesheet" href="../editormd/css/editormd.preview.css" />
 <script src="../editormd/examples/js/jquery.min.js"></script>

@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eclipse.jdt.internal.compiler.ast.IPolyExpression;
 
@@ -48,6 +49,7 @@ public class updateUser extends HttpServlet {
 		String user_email = request.getParameter("user_email");
 		String user_psd = request.getParameter("user_psd");
 		String up_user = request.getParameter("up_user");
+		HttpSession session = request.getSession();
 		int result = 0;
 		String sql = "UPDATE user SET user_name=?, user_email=?, user_psd=? WHERE user_name=?";
 		try {
@@ -59,6 +61,7 @@ public class updateUser extends HttpServlet {
 			result = ps.executeUpdate();
 			PrintWriter out = response.getWriter();
 			if(result > 0) {
+				session.setAttribute("user_name", user_name);
 				out.write("true");
 			}else {
 				out.write("false");

@@ -12,6 +12,7 @@
   <style>
   a:hover {text-decoration: none; cursor: pointer}
   </style>
+  <script type="text/javascript" src="../js/jquery.form.js"></script>
 </head>
 
 <body>
@@ -56,13 +57,39 @@ try {
 <div class='bodystyle'>
   <div class='bodystyle1'>
     <div>
-       <img src="../images/luntan.jpg" width="100px" height="100px" style='float:left'/>
+       <img id="author_image" src="<%=session.getAttribute("image_url") %>" data-toggle="modal" data-target="#upload" width="70px" height="70px" style='float:left; border-radius: 50%; cursor: pointer;'/>
     </div>
+    <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <form id="form_upload" method="POST" action="../uploadImage" enctype="multipart/form-data">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">修改头像</h4>
+            </div>
+            <div class="modal-body">
+            <div class="control-group">
+                 <input id="lefile" type="file" name="lefile" style="display:none"> 
+			 	 <div class="input-append"> 
+				 <input id="photoCover" class="input-large" type="text" style="height:34px;"> 
+				 <a class="btn" onclick="$('input[id=lefile]').click();">浏览</a> 
+				 </div> 
+             </div>
+			</div>
+            <div class="modal-footer"> 
+                <button type="button" id="saveImage" class="btn btn-primary" style="color: #8B7765;">保存</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
     <div style='float:left'>
-       <ul>
-         <li><h3><%= session.getAttribute("user_name") %></h3></li>
-         <li><%= session.getAttribute("user_email") %></li>
-       </ul>
+       <div style="height: 70px; line-height: 70px;">
+       <div>
+         <h3><%= session.getAttribute("user_name") %></h3>
+         <span><%= session.getAttribute("user_email") %></span>
+       </div>
+       </div>
     </div>
   </div>
   <div class='bodystyle2'>
@@ -135,6 +162,27 @@ try {
 <div>
 </div>
 <script>
+$("#saveImage").click(function() {
+	var options = {
+			url: "../uploadImage",
+			type: "POST",
+			success: function(url) {
+				$("#author_image").attr("src", url);
+			},
+			error: function(error) {
+				alert("修改失败");
+			}
+	};
+	$("#form_upload").ajaxSubmit(options);
+});
+$('input[id=lefile]').change(function() { 
+	 $('#photoCover').val($(this).val()); 
+}); 
+$(function() {
+    $('#upload').modal({
+        keyboard: true
+    })
+});
 $("#reset_name").click(function() {
 	$("#username").removeAttr("readonly");
 });

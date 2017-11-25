@@ -62,7 +62,7 @@ a:hover {text-decoration: none;}
 <ul class="panel-head">
 <span>个人资料</span>
 </ul>
-<img src="../images/login-bg1.jpg" width="35%" style="margin: 0 auto; margin-left: 5%;">
+<img src="<%=DaoFactory.getUser().getUrlByName(request.getParameter("author")) %>" width="35%" style="margin: 0 auto; margin-left: 5%;">
 <div class="username"><%= request.getParameter("author") %></div>
 </div>
 
