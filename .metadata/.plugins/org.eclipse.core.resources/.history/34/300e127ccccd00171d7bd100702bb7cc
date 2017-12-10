@@ -1,5 +1,0 @@
-package mid.dao;
-
-public interface IUserDao {
-
-}

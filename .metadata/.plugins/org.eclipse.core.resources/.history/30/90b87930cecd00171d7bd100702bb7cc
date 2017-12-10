@@ -1,7 +1,0 @@
-package mid.bean;
-
-public class User {
-	private String user_name;
-	private String user_email;
-	private String user_psd;
-}

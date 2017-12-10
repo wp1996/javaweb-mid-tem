@@ -3,6 +3,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.jsp.tagext.TryCatchFinally;
+
 import mid.term.CommonDb;
 
 public class blogBean {
@@ -13,6 +15,32 @@ public class blogBean {
 	private int access_count;
 	private String savetime;
 	private ResultSet rs = null;
+	
+	public ResultSet getBlogsByPage(int page) {
+		int start = (page - 1) * 10;
+		int len = 10;
+		String sql = "SELECT * FROM blog ORDER BY id DESC LIMIT ?, ?";
+		try {
+			PreparedStatement ps = CommonDb.executePreparedStatement(sql);
+			ps.setInt(1, start);
+			ps.setInt(2, len);
+			rs = ps.executeQuery();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet initBlog() {
+		String sql = "SELECT * FROM blog LIMIT 0, 50";
+		try {
+			PreparedStatement PS = CommonDb.executePreparedStatement(sql);
+			rs = PS.executeQuery();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
 	
 	public ResultSet getBlogs(String author_name) {
 		String sql = "SELECT * FROM blog WHERE author_name=? ORDER BY id DESC";

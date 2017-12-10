@@ -299,6 +299,9 @@ $("#cancel").click(function() {
 	$("#old_password").attr("readonly", "readonly");
 	$("#psd_span").text("密码：");
 	$("#newpsd_div").html("");
+	$("#nullemail").css("display", "none");
+	$("#nulloldpsd").css("display", "none");
+	$("#nullpsd").css("display", "none");
 });
 function sign_out() {
 	$.ajax({

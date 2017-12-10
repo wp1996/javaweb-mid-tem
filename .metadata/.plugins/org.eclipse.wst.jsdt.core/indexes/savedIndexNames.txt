@@ -5,5 +5,3 @@ INDEX VERSION 1.4+E:\A_ProjectandProjecttest\javaweb_midterm\.metadata\.plugins\
 2022941593.index
 776576516.index
 2977220781.index
-2208437158.index
-2208437158.index

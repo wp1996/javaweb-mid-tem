@@ -50,6 +50,11 @@ public class sourceFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)res;
 		String url = request.getServletPath();
+		if (url.contains("addBlogTest")) {
+			PrintWriter out = response.getWriter();
+			out.print("<html><script>window.open('"+ request.getContextPath() +"/errorpage/nopermission.jsp','_self')</script></html>");
+			return;
+		}
 		for (String acc : access) {
 			if (url.contains(acc)) {
 				chain.doFilter(req, res);

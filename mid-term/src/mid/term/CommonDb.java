@@ -1,7 +1,12 @@
 package mid.term;
 import java.sql.*;
 
+import mid.factory.DaoFactory;
+import mid.term.pool;
+
 import javax.naming.spi.DirStateFactory.Result;
+
+import org.apache.tomcat.jni.Pool;
 
 public class CommonDb {
 	/**
@@ -21,6 +26,8 @@ public class CommonDb {
 	 * 
 	 */
 	public static synchronized Connection getConnection() {
+//		pool pool = DaoFactory.getPool();
+//		return pool.getConnection();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(URL);

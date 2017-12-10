@@ -78,8 +78,11 @@ public class uploadImage extends HttpServlet {
 		String ext = file.getFileExt();
 		String filename = user_name + "_" + time + "." + ext;
 		try {
-			File dltfile = new File(servletConfig.getServletContext().getRealPath("/") + user.getUrlByName(user_name).substring(3));
-			dltfile.delete();
+			String detUrl = user.getUrlByName(user_name);
+			if (detUrl != null && !detUrl.equals("")) {
+				File dltfile = new File(servletConfig.getServletContext().getRealPath("/") + detUrl.substring(3));
+				dltfile.delete();
+			}
 			file.saveAs("/upload/" + filename);
 			user.setImage_url("../upload/" + filename);
 			PreparedStatement ps = CommonDb.executePreparedStatement(sql);
