@@ -174,3 +174,62 @@ function checkrepeat_home(check) {
 	});
 	return tag;
 }
+
+function showPage(page) {
+	$.ajax({
+		url: "../getPageBlogs",
+		data: {
+			page: page
+		},
+		type: "POST",
+		dataType: "json",
+		success: function(json) {
+			if(json['isnull'] == 'true') return;
+			var html = "";
+			for(var i in json) {
+				if(i == 'isnull') continue;
+				blog = JSON.parse(json[i]);
+				if (blog['title'].length > 15) {
+					blog['title'] = blog['title'].substring(0, 15) + "...";
+				}
+				html += "<li class='recommend-blog-content'>" + 
+				"<form action='show_blog.jsp' method='POST'>" +
+				"<div style='text-align: left;'>" +
+				"<input style='display: none;' name='blog_id'value="+ blog['id'] +">" +
+				"<input style='display: none;' name='author' value="+ blog['author_name'] +">" +
+				"<input class='recommend-blog-title' type='submit' value="+ blog['title'] +">" +
+				"<span class='access_count'>(访问量 : "+ blog['access_count'] +")</span></div></form></li>";
+			}
+			$("#show_blog").html(html);
+			$("#next").attr("name", parseInt(page) + 1);
+			var pageInt = parseInt(page)
+			if(pageInt > 1) $("#previous").attr("name", pageInt - 1);
+			else $("#previous").attr("name",  1);
+			//if(pageInt != 1) {
+				var lastnode = $("#pageList").children("li:last-child").prev().children("a");
+				var firstnode = $("#pageList").children("li:first-child").next().children("a");
+				var firstcount = parseInt(firstnode.attr("name"));
+				var lastcount = parseInt(lastnode.attr("name"));
+				if(page > lastcount) {
+					var childs = $("#pageList a");
+					for(var i = 1; i < childs.length-1; i++) {
+						// 注意在这里childs[i]是对象，并不完全相当于节点对象
+						// 所以取其属性值和设置其属性值时与节点操作不完全相同
+						childs[i].name = parseInt(childs[i].name) + 1;
+						childs[i].text = parseInt(childs[i].text) + 1;
+					}
+				}
+				if(page < firstcount) {
+					var childs = $("#pageList a");
+					for(var i = 1; i < childs.length - 1; i++) {
+						childs[i].name = parseInt(childs[i].name) - 1;
+						childs[i].text = parseInt(childs[i].text)- 1;
+					}
+				}
+			//}
+		},
+		error: function(error) {
+			confirm("系统错误！");
+		}
+	});
+}

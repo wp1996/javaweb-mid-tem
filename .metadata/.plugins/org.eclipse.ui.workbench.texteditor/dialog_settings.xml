@@ -2,27 +2,22 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="author_image" key="selection"/>
+		<item value="next" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="author_image"/>
+			<item value="next"/>
+			<item value="show_blog"/>
+			<item value="function showPage(page) {"/>
+			<item value="search"/>
+			<item value="key"/>
 			<item value="saveImage"/>
+			<item value="uploadImage"/>
+			<item value="author_image"/>
 			<item value="form_upload"/>
 			<item value="旧密码"/>
-			<item value="此文章"/>
-			<item value="logo-text"/>
-			<item value="blog-title"/>
-			<item value="session"/>
-			<item value="pointer"/>
-			<item value="posi"/>
-			<item value="container"/>
-			<item value="form-control"/>
-			<item value="btn"/>
-			<item value="in"/>
-			<item value="fade"/>
 		</list>
 		<list key="replacehistory">
 		</list>

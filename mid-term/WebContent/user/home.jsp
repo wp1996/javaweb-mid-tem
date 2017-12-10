@@ -20,7 +20,7 @@ String img_url = "../images/search-bg" + n + ".jpg";
 </div>
 <div class="col-lg-7" >
 <div class="input-group">
-<input id="key" style="height: 38px; border-radius: 20px 0 0 20px;" type="text" class="form-control" placeholder="请输入你想要搜索的文章">
+<input onkeyup="search_click(event)" id="key" style="height: 38px; border-radius: 20px 0 0 20px;" type="text" class="form-control" placeholder="请输入你想要搜索的文章">
 <span class="input-group-btn" id="search">
 <button class="btn btn-default search-btn" type="button">搜索</button>
 </span>
@@ -50,11 +50,11 @@ String img_url = "../images/search-bg" + n + ".jpg";
 <div id="blogs_list" style="float: left; margin-top: 10px; padding: 10px; width: 100%;">
 <div>
 <div class="recommend">
-<span>今日推荐：</span>
+<span>最新文章：</span>
 </div>
 <div class="row" style="margin-top: 10px;">
 <div class="col-md-6">
-<ul style="width: 100%;">
+<ul style="width: 100%;" id="show_blog">
 <%
 ResultSet rs = blog.getAllBlogs();
 String title = "";
@@ -92,6 +92,45 @@ while(rs.next()) {
 }
 %>
 </ul>
+<ul id="pageList" class="pagination" style="float: left;">
+<%
+ResultSet pageRs = blog.initBlog();
+pageRs.last();
+int count = pageRs.getRow();
+pageRs.first();
+if(count >= 50) {
+	%>
+	<li><a id="previous" href="javascript:void(0);" name="1" onclick="showPage(this.name)">&laquo;</a></li>
+	<li><a href="javascript:void(0);" name="1" onclick="showPage(this.name)">1</a></li>
+	<li><a href="javascript:void(0);" name="2" onclick="showPage(this.name)">2</a></li>
+	<li><a href="javascript:void(0);" name="3" onclick="showPage(this.name)">3</a></li>
+	<li><a href="javascript:void(0);" name="4" onclick="showPage(this.name)">4</a></li>
+	<li><a href="javascript:void(0);" name="5" onclick="showPage(this.name)">5</a></li>
+	<li><a id="next" href="javascript:void(0);" name="2" onclick="showPage(this.name)">&raquo;</a></li>
+	<%
+}
+else {
+	int pageNum = (int)(Math.ceil(((double)count)/10));
+	if(pageNum != 0) {
+		if(pageNum != 1) {
+			%>
+			<li><a id="previous" href="javascript:void(0);" name="1" onclick="showPage(this.name)">&laquo;</a></li>
+			<%
+		}
+		for (int i = 1; i <= pageNum; i++) {
+			%>
+			<li><a href="javascript:void(0);" name="<%=i %>" onclick="showPage(this.name)"><%=i %></a></li>
+			<%
+		}
+		if(pageNum != 1) {
+			%>
+			<li><a id="next" href="javascript:void(0);" name="2" onclick="showPage(this.name)">&raquo;</a></li>
+			<%
+		}
+	}
+}
+%>
+</ul>
 </div>
 </div>
 </div>
@@ -101,8 +140,18 @@ while(rs.next()) {
 <script>
 $(document).ready(function() {
 	$("a").attr("target", "_blank");
-	$("form").attr("target","_blank")
+	$("form").attr("target","_blank");
+	$(".pagination a").attr("target", "_self");
 });
+function search_click(e) {
+	e = e ? e : (window.event ? window.event : null);
+	var enterId = e.srcElement.id;
+	if(e.keyCode == 13) {
+		if(enterId == "key") {
+			$("#search").click();
+		}
+	}
+}
 var bghtml;
 var blog;
 $("#search").click(function() {
